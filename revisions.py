@@ -2,6 +2,7 @@ from neuron import h, gui
 from matplotlib import pyplot
 from matplotlib.pyplot import MultipleLocator
 import mplcursors
+import math
 
 na = 0.075998  # Sodium conductance
 k = 0.017005  # Potassium conductance
@@ -13,7 +14,7 @@ for i in range(1):
     axon1.nseg = 200
     axon1.Ra = 5
     axon1.cm = 1
-    axon1.insert('hh')
+    axon1.insert('hh')   
     for seg in axon1:
         seg.hh.gnabar = na
         seg.hh.gkbar = k
@@ -53,10 +54,12 @@ for i in range(1):
     def turn_on():
         axon2(0.4975).hh.gl = 0.001225
         axon2(0.5025).hh.gl = 0.001225
+	#temperature = 31.39 * exp((9.432*10 ^(-5)) * t) - (3.059*10 ^(6)) * exp(-.06376 * t) 
 
     def turn_off():
         axon2(0.4975).hh.gl = 0.00014
         axon2(0.5025).hh.gl = 0.00014
+	#temperature = (CHECK NOTEBOOK)
 
     h.finitialize(-65)
     h.CVode().event(200, turn_on)
@@ -94,7 +97,7 @@ for i in range(1):
     pyplot.legend(p1 + p2, ['IR off', 'IR on'])
     pyplot.xlabel('Time (ms)')
     pyplot.ylabel('Membrane potential (mV)')
-    pyplot.xlim(390, 400)  # Define the coordinate interval
+    pyplot.xlim(0, 1200)  # Define the coordinate interval
     mplcursors.cursor()  # Data cursor
     # Set coordinate scale
     x_major_locator = MultipleLocator(100)
