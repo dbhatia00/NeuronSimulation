@@ -35,13 +35,13 @@ for i in range(1):
 
     i1 = h.IClamp(axon1(0.5))
     i1.delay = 100
-    i1.dur = 1000
-    i1.amp = 20
+    i1.dur = 1500
+    i1.amp = -10
 
     i2 = h.IClamp(axon2(0.5))
     i2.delay = 100
-    i2.dur = 1000
-    i2.amp = 20
+    i2.dur = 1500
+    i2.amp = -10
 
     t = h.Vector()
     v1 = h.Vector()
