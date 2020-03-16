@@ -94,7 +94,7 @@ for i in range(1):
     pyplot.legend(p1 + p2, ['IR off', 'IR on'])
     pyplot.xlabel('Time (ms)')
     pyplot.ylabel('Membrane potential (mV)')
-    pyplot.xlim(390, 400)  # Define the coordinate interval
+    pyplot.xlim(0, 1000)  # Define the coordinate interval
     mplcursors.cursor()  # Data cursor
     # Set coordinate scale
     x_major_locator = MultipleLocator(100)

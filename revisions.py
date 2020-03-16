@@ -36,13 +36,13 @@ for i in range(1):
 
     i1 = h.IClamp(axon1(0.5))
     i1.delay = 100
-    i1.dur = 1000
-    i1.amp = 20
+    i1.dur = 1500
+    i1.amp = -10
 
     i2 = h.IClamp(axon2(0.5))
     i2.delay = 100
-    i2.dur = 1000
-    i2.amp = 20
+    i2.dur = 1500
+    i2.amp = -10
 
     t = h.Vector()
     v1 = h.Vector()
@@ -50,23 +50,23 @@ for i in range(1):
     t.record(h._ref_t)
     v1.record(axon1(0.53)._ref_v)
     v2.record(axon2(0.53)._ref_v)
-
+# Fix conductance / STep current  (-10 - 20) / Zoom in on action pot / create phase plot --> MONDAY 
     def turn_on():
-        axon2(0.4975).hh.gl = 0.001225
-        axon2(0.5025).hh.gl = 0.001225
-	#temperature = 31.39 * exp((9.432*10 ^(-5)) * t) - (3.059*10 ^(6)) * exp(-.06376 * t) 
+        for time in range(196, 690):
+                axon2(0.4975).hh.gl =  3.653*pow(10,-5)*(31.39 * math.exp((9.432*pow(10,-5)) * time) - (3.059*pow(10,6)) * math.exp(-.06376 * time))
+                axon2(0.5025).hh.gl =  3.653*pow(10,-5)*(31.39 * math.exp((9.432*pow(10,-5)) * time) - (3.059*pow(10,6)) * math.exp(-.06376 * time))
 
     def turn_off():
-        axon2(0.4975).hh.gl = 0.00014
-        axon2(0.5025).hh.gl = 0.00014
-	#temperature = (CHECK NOTEBOOK)
+        for time in range(690, 1700):
+                axon2(0.4975).hh.gl = 6.81*pow(10,-6)*(6.742*pow(10,10) * math.exp(-.03253 * time) + (22.43) * math.exp(-5*pow(10,-5) * time))
+                axon2(0.5025).hh.gl = 6.81*pow(10,-6)*(6.742*pow(10,10) * math.exp(-.03253 * time) + (22.43) * math.exp(-5*pow(10,-5) * time))
 
     h.finitialize(-65)
     h.CVode().event(200, turn_on)
     h.CVode().event(700, turn_off)
-    h.continuerun(1400)
+    h.continuerun(1700)
 
-    # Define the derivative function
+    # Define the derivative function simulate laser induced temp change in water 
     def difference(data_list):
         diff = list()
         for item in range(len(data_list) - 1):
@@ -97,7 +97,7 @@ for i in range(1):
     pyplot.legend(p1 + p2, ['IR off', 'IR on'])
     pyplot.xlabel('Time (ms)')
     pyplot.ylabel('Membrane potential (mV)')
-    pyplot.xlim(0, 1200)  # Define the coordinate interval
+    pyplot.xlim(0, 3000)  # Define the coordinate interval
     mplcursors.cursor()  # Data cursor
     # Set coordinate scale
     x_major_locator = MultipleLocator(100)
