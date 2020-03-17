@@ -73,7 +73,7 @@ for i in range(1):
             diff.append((data_list[item + 1] - data_list[item]) / 0.025)
         return diff
 
-    '''
+    
     # Phase Plot of the Action Potentials
     list_v1 = list(v1)
     list_v2 = list(v2)
@@ -89,7 +89,7 @@ for i in range(1):
     pyplot.xlabel('Membrane potential (mV)')
     pyplot.ylabel('dv/dt (V/s)')
     pyplot.show()
-    '''
+    
 
     # Partial enlargement
     p1 = pyplot.plot(t, v1, color='blue')
