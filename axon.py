@@ -36,12 +36,12 @@ for i in range(1):
     i1 = h.IClamp(axon1(0.5))
     i1.delay = 100
     i1.dur = 1500
-    i1.amp = -10
+    i1.amp = 20
 
     i2 = h.IClamp(axon2(0.5))
     i2.delay = 100
     i2.dur = 1500
-    i2.amp = -10
+    i2.amp = 20
 
     t = h.Vector()
     v1 = h.Vector()
@@ -70,7 +70,7 @@ for i in range(1):
             diff.append((data_list[item + 1] - data_list[item]) / 0.025)
         return diff
 
-    '''
+    
     # Phase Plot of the Action Potentials
     list_v1 = list(v1)
     list_v2 = list(v2)
@@ -86,7 +86,7 @@ for i in range(1):
     pyplot.xlabel('Membrane potential (mV)')
     pyplot.ylabel('dv/dt (V/s)')
     pyplot.show()
-    '''
+    
 
     # Partial enlargement
     p1 = pyplot.plot(t, v1, color='blue')
@@ -94,7 +94,7 @@ for i in range(1):
     pyplot.legend(p1 + p2, ['IR off', 'IR on'])
     pyplot.xlabel('Time (ms)')
     pyplot.ylabel('Membrane potential (mV)')
-    pyplot.xlim(0, 1000)  # Define the coordinate interval
+    pyplot.xlim(274, 288)  # Define the coordinate interval
     mplcursors.cursor()  # Data cursor
     # Set coordinate scale
     x_major_locator = MultipleLocator(100)

@@ -34,32 +34,31 @@ for i in range(1):
         seg.hh.gl = 0.00014
         seg.hh.el = -65
 
-    i1 = h.IClamp(axon1(0.5))
+    i1 = h.IClamp(axon1(0.001))
     i1.delay = 100
     i1.dur = 1500
-    i1.amp = 20
+    i1.amp = 17.8
 
-    i2 = h.IClamp(axon2(0.5))
+    i2 = h.IClamp(axon2(0.001))
     i2.delay = 100
     i2.dur = 1500
-    i2.amp = 20
+    i2.amp = 17.8
 
     t = h.Vector()
     v1 = h.Vector()
     v2 = h.Vector()
     t.record(h._ref_t)
-    v1.record(axon1(0.53)._ref_v)
-    v2.record(axon2(0.53)._ref_v)
-# Fix conductance / STep current  (-10 - 20) / Zoom in on action pot / create phase plot --> MONDAY 
+    v1.record(axon1(0.55)._ref_v)
+    v2.record(axon2(0.55)._ref_v)
     def turn_on():
         for time in range(196, 690):
-                axon2(0.4975).hh.gl =  3.653*pow(10,-5)*(31.39 * math.exp((9.432*pow(10,-5)) * time) - (3.059*pow(10,6)) * math.exp(-.06376 * time))
-                axon2(0.5025).hh.gl =  3.653*pow(10,-5)*(31.39 * math.exp((9.432*pow(10,-5)) * time) - (3.059*pow(10,6)) * math.exp(-.06376 * time))
+                axon2(0.5475).hh.gl =  3.653*pow(10,-5)*(31.39 * math.exp((9.432*pow(10,-5)) * time) - (3.059*pow(10,6)) * math.exp(-.06376 * time))
+                axon2(0.5525).hh.gl =  3.653*pow(10,-5)*(31.39 * math.exp((9.432*pow(10,-5)) * time) - (3.059*pow(10,6)) * math.exp(-.06376 * time))
 
     def turn_off():
         for time in range(690, 1700):
-                axon2(0.4975).hh.gl = 6.81*pow(10,-6)*(6.742*pow(10,10) * math.exp(-.03253 * time) + (22.43) * math.exp(-5*pow(10,-5) * time))
-                axon2(0.5025).hh.gl = 6.81*pow(10,-6)*(6.742*pow(10,10) * math.exp(-.03253 * time) + (22.43) * math.exp(-5*pow(10,-5) * time))
+                axon2(0.5475).hh.gl = 6.81*pow(10,-6)*(6.742*pow(10,10) * math.exp(-.03253 * time) + (22.43) * math.exp(-5*pow(10,-5) * time))
+                axon2(0.5525).hh.gl = 6.81*pow(10,-6)*(6.742*pow(10,10) * math.exp(-.03253 * time) + (22.43) * math.exp(-5*pow(10,-5) * time))
 
     h.finitialize(-65)
     h.CVode().event(200, turn_on)
@@ -73,23 +72,23 @@ for i in range(1):
             diff.append((data_list[item + 1] - data_list[item]) / 0.025)
         return diff
 
-    
+    ''' 
     # Phase Plot of the Action Potentials
     list_v1 = list(v1)
     list_v2 = list(v2)
-    list_v3 = list_v1[27644:28744]  # Intercept a complete action potential
-    list_v4 = list_v2[27450:28600]  # Intercept a complete action potential
+    list_v3 = list_v1[66700:67600]  # Intercept a complete action potential
+    list_v4 = list_v2[66500:69600]  # Intercept a complete action potential
     list_v5 = difference(list_v3)
     list_v6 = difference(list_v4)
-    list_v7 = list_v1[27645:28744]  # Define the coordinate interval
-    list_v8 = list_v2[27451:28600]  # Define the coordinate interval
+    list_v7 = list_v1[66701:67600]  # Define the coordinate interval
+    list_v8 = list_v2[66501:69600]  # Define the coordinate interval
     p1 = pyplot.plot(list_v7, list_v5, color='blue')
     p2 = pyplot.plot(list_v8, list_v6, color='red')
     pyplot.legend(p1 + p2, ['IR off', 'IR on'])
     pyplot.xlabel('Membrane potential (mV)')
     pyplot.ylabel('dv/dt (V/s)')
     pyplot.show()
-    
+    ''' 
 
     # Partial enlargement
     p1 = pyplot.plot(t, v1, color='blue')
@@ -97,7 +96,7 @@ for i in range(1):
     pyplot.legend(p1 + p2, ['IR off', 'IR on'])
     pyplot.xlabel('Time (ms)')
     pyplot.ylabel('Membrane potential (mV)')
-    pyplot.xlim(665, 696)  # Define the coordinate interval
+    pyplot.xlim(0, 2000)  # Define the coordinate interval
     mplcursors.cursor()  # Data cursor
     # Set coordinate scale
     x_major_locator = MultipleLocator(100)
