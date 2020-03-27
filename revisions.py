@@ -72,23 +72,23 @@ for i in range(1):
             diff.append((data_list[item + 1] - data_list[item]) / 0.025)
         return diff
 
-    ''' 
+    
     # Phase Plot of the Action Potentials
     list_v1 = list(v1)
     list_v2 = list(v2)
-    list_v3 = list_v1[66700:67600]  # Intercept a complete action potential
-    list_v4 = list_v2[66500:69600]  # Intercept a complete action potential
+    list_v3 = list_v1[27644:28744]  # Intercept a complete action potential
+    list_v4 = list_v2[27450:28600]  # Intercept a complete action potential
     list_v5 = difference(list_v3)
     list_v6 = difference(list_v4)
-    list_v7 = list_v1[66701:67600]  # Define the coordinate interval
-    list_v8 = list_v2[66501:69600]  # Define the coordinate interval
+    list_v7 = list_v1[27645:28744]  # Define the coordinate interval
+    list_v8 = list_v2[27451:28600]  # Define the coordinate interval
     p1 = pyplot.plot(list_v7, list_v5, color='blue')
     p2 = pyplot.plot(list_v8, list_v6, color='red')
     pyplot.legend(p1 + p2, ['IR off', 'IR on'])
     pyplot.xlabel('Membrane potential (mV)')
     pyplot.ylabel('dv/dt (V/s)')
     pyplot.show()
-    ''' 
+   
 
     # Partial enlargement
     p1 = pyplot.plot(t, v1, color='blue')
