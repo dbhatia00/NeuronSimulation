@@ -34,15 +34,15 @@ for i in range(1):
         seg.hh.gl = 0.00014
         seg.hh.el = -65
 
-    i1 = h.IClamp(axon1(0.001))
+    i1 = h.IClamp(axon1(0.5))
     i1.delay = 100
     i1.dur = 1500
-    i1.amp = 20
+    i1.amp = -10
 
-    i2 = h.IClamp(axon2(0.001))
+    i2 = h.IClamp(axon2(0.5))
     i2.delay = 100
     i2.dur = 1500
-    i2.amp = 20
+    i2.amp = -10
 
     t = h.Vector()
     v1 = h.Vector()
@@ -72,7 +72,7 @@ for i in range(1):
             diff.append((data_list[item + 1] - data_list[item]) / 0.025)
         return diff
 
-    
+    '''
     # Phase Plot of the Action Potentials
     list_v1 = list(v1)
     list_v2 = list(v2)
@@ -88,7 +88,7 @@ for i in range(1):
     pyplot.xlabel('Membrane potential (mV)')
     pyplot.ylabel('dv/dt (V/s)')
     pyplot.show()
-   
+    '''
 
     # Partial enlargement
     p1 = pyplot.plot(t, v1, color='blue')
