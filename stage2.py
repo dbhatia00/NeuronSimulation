@@ -3,6 +3,7 @@ from matplotlib import pyplot
 from matplotlib.pyplot import MultipleLocator
 import mplcursors
 import math
+import pprint
 
 na = 0.075998  # Sodium conductance
 k = 0.017005  # Potassium conductance
@@ -35,13 +36,14 @@ for i in range(1):
         seg.hh.el = -65
 
     i1 = h.IClamp(axon1(0.001))
-    i1.delay = 100
-    i1.dur = 1500
+    i1.delay = 500
+    i1.dur = 200
     i1.amp = 20
+    print(dir(i1))    
 
     i2 = h.IClamp(axon2(0.001))
-    i2.delay = 100
-    i2.dur = 1500
+    i2.delay = 500
+    i2.dur = 200
     i2.amp = 20
 
     t = h.Vector()
@@ -72,7 +74,7 @@ for i in range(1):
             diff.append((data_list[item + 1] - data_list[item]) / 0.025)
         return diff
 
-    
+    '''    
     # Phase Plot of the Action Potentials
     list_v1 = list(v1)
     list_v2 = list(v2)
@@ -88,7 +90,7 @@ for i in range(1):
     pyplot.xlabel('Membrane potential (mV)')
     pyplot.ylabel('dv/dt (V/s)')
     pyplot.show()
-   
+   '''
 
     # Partial enlargement
     p1 = pyplot.plot(t, v1, color='blue')
