@@ -39,7 +39,7 @@ for i in range(1):
     i1.delay = 500
     i1.dur = 200
     i1.amp = 20
-    print(dir(i1))    
+    #print(dir(i1))    
 
     i2 = h.IClamp(axon2(0.001))
     i2.delay = 500
