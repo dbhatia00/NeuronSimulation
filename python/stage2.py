@@ -1,6 +1,7 @@
 from neuron import h, gui
 from matplotlib import pyplot
 from matplotlib.pyplot import MultipleLocator
+from matplotlib.widgets import Slider
 import mplcursors
 import math
 import pprint
@@ -36,14 +37,14 @@ for i in range(1):
         seg.hh.el = -65
 
     i1 = h.IClamp(axon1(0.001))
-    i1.delay = 500
-    i1.dur = 200
+    i1.delay = 100
+    i1.dur = 1500
     i1.amp = 20
     #print(dir(i1))    
 
     i2 = h.IClamp(axon2(0.001))
-    i2.delay = 500
-    i2.dur = 200
+    i2.delay = 100
+    i2.dur = 1500
     i2.amp = 20
 
     t = h.Vector()
@@ -104,8 +105,22 @@ for i in range(1):
     x_major_locator = MultipleLocator(100)
     ax = pyplot.gca()
     ax.xaxis.set_major_locator(x_major_locator)
-    pyplot.show()
+    
 
+    #sliders
+    axb = pyplot.axes([0.15, 0.01 , 0.65, 0.03])
+    sb = Slider(axb, 'current injected', -30, 30, valinit = i1.amp)
+
+    def update(val):
+        i1.amp = val
+        i2.amp = val
+        v1.record(axon1(0.55)._ref_v)
+        v2.record(axon2(0.55)._ref_v)
+        p1 = pyplot.plot(t, v1, color='blue')
+        p2 = pyplot.plot(t, v2, color='red')
+    sb.on_changed(update)
+
+    pyplot.show()
     '''
     # Calculate the maximum attenuation of action potentials' amplitude under infrared radiation
     list_v1 = list(v1)
