@@ -17,6 +17,7 @@ R = 93.41 * pow(10,-6)#m
 z = 164.56 * pow(10,-6)#m
 r = 25 * pow(10,-6) #m
 dt = []
+
 for powers in range(0,len(P0)):
 	P = P0[powers] * math.exp(-ua*z)
 	tc = pow(R,2) *c* p /(4*k)
@@ -30,7 +31,15 @@ plt.plot(P0,dt)
 plt.xlabel('Laser Power (W)')
 plt.ylabel('Delta T (C)')
 plt.grid(True)
+
 slope = abs((dt[0] - dt[1]) / (P0[0] - P0[1])) * pow(10,-3)
 s = 'slope = ' + str(slope) + ' C/mW'
-plt.text(.0025,7,s)
+plt.text(.00,6,s)
+
+s = 'time = ' + str(t) + 's'
+plt.text(.0,7,s)
+
+s = 'lambda = ' + str(wavelength*pow(10,9)) + 'nm'
+plt.text(.00,8,s)
+
 plt.show()
