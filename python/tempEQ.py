@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 import math
 
 def integrand(x,tempC, lilR, bigR):
-	print(bigR, " ", lilR, " ", tempC, " ", x )
-	c = (1/(1+2*(x/tempC)))
+	#print(bigR, " ", lilR, " ", tempC, " ", x )
+	c = ((1+2*(x/tempC)))
+	
 	expBit = (-2*pow(lilR,2)) / (pow(bigR, 2) * c)
-	del(x)
-	return c* math.exp(expBit)
+	return (1/c)* math.exp(expBit)
 
 t = 500 *pow(10,-3) #s
 wavelength = 1994 * pow(10,-9) #m
@@ -22,16 +22,18 @@ z = 117.55 * pow(10,-6)#m
 r = 25 * pow(10,-6) #m
 dt = []
 
-for powers in range(0,len(P0)):
-	P = P0[powers] * math.exp(-ua*z)
-	tc = pow(R,2) *c* p /(4*k)
+tc = pow(R,2) *c* p /(4*k)
+insideIntegral,error = integrate.quad(integrand, 0, t, args = (tc,r, R,))
+
+for powers in P0:
+	P = powers * math.exp(-ua*z)
+	
 	constantBeforeIntegral = (2* ua * P) / (p*c*pi*pow(R,2))
 	
-	#insideIntegral = integrate.quad(integrand, 0, t, args = (tc,r, R))
-	insideIntegral = .00676
+
 	dt.append(insideIntegral*constantBeforeIntegral)
 	print("Integrand " , insideIntegral)
-	print("deltaT = ", insideIntegral*constantBeforeIntegral, "C when P = " , P0[powers] , "W")
+	print("deltaT = ", insideIntegral*constantBeforeIntegral, "C when P = " , powers , "W")
 
 print('Thermal time constant ' , tc)
 
