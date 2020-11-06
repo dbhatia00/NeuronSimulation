@@ -9,7 +9,7 @@ def integrand(x,tempC, lilR, bigR):
 	expBit = (-2*pow(lilR,2)) / (pow(bigR, 2) * c)
 	return (1/c)* math.exp(expBit)
 
-t0 = [0,.25,.5,.75,1] #s
+t0 = [1] #s
 wavelength = 1994 * pow(10,-9) #m
 ua = 73.9 *100  #m^-1, optical absorbtion coeff
 k = 0.6 #W m^-1 K^-1
