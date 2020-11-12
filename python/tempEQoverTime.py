@@ -17,7 +17,8 @@ k = 0.6 #W m^-1 K^-1
 p = 1000 #kg/m^-3
 c = 4184 # J kg^-1 K^-1
 pi = 3.14
-P0 = [0.005, .00692, .01 ,.0132, .015, .02] #W // Array of power values
+#P0 = [0.005, .00692, .01 ,.0132, .015, .02] #W // Array of power values
+P0 = numpy.linspace(.00692, .015, 8)
 R = 25* pow(10,-6)#m
 z = 117.55 * pow(10,-6)#m
 r = 25.18 * pow(10,-6) #m
@@ -47,5 +48,5 @@ for P in P0:
 	#s = 'lambda = ' + str(wavelength*pow(10,9))[0:4] + 'nm'
 	#plt.text(.4,max(dt)*.1,s)
 
-plt.legend()
+plt.legend(title = 'Power on Surface (W)')
 plt.show()
