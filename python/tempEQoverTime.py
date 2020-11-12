@@ -18,12 +18,14 @@ p = 1000 #kg/m^-3
 c = 4184 # J kg^-1 K^-1
 pi = 3.14
 #P0 = [0.005, .00692, .01 ,.0132, .015, .02] #W // Array of power values
-P0 = numpy.linspace(.00692, .015, 8)
+#P0 = numpy.linspace(.00692, .015, 8)
+P = .00692
 R = 25* pow(10,-6)#m
-z = 117.55 * pow(10,-6)#m
+#z = 117.55 * pow(10,-6)#m
+Z0 = numpy.linspace(1 * pow(10,-6), 200 * pow(10,-6), 10)
 r = 25.18 * pow(10,-6) #m
 
-for P in P0:
+for z in Z0:
 	dt = []
 	tc = pow(R,2) *c* p /(4*k)
 
@@ -33,10 +35,10 @@ for P in P0:
 		constantBeforeIntegral = (2* ua * P1) / (p*c*pi*pow(R,2))
 		dt.append(insideIntegral*constantBeforeIntegral)
 
-	plt.plot(t0, dt, label = (str(P1)[0:7] + 'W'))
+	plt.plot(t0, dt, label = (str(z*pow(10,6))[0:7] + 'um'))
 	plt.xlabel('Time from laser firing (s)')
 	plt.ylabel('Delta T (C)')
-	plt.title('Peak Temperature Change over Time; Power Alteration')
+	plt.title('Peak Temperature Change over Time; Z-Distance Alteration')
 	plt.grid(True)
 
 	#s = 'Power On Surface = ' + str(P1)[0:6] + 'W'
@@ -48,5 +50,5 @@ for P in P0:
 	#s = 'lambda = ' + str(wavelength*pow(10,9))[0:4] + 'nm'
 	#plt.text(.4,max(dt)*.1,s)
 
-plt.legend(title = 'Power on Surface (W)')
+plt.legend(title = 'Z-Distance (um)')
 plt.show()
