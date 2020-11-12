@@ -12,7 +12,8 @@ def integrand(x,tempC, lilR, bigR):
 
 t0 = numpy.linspace(0, 1, 100) #s
 wavelength = 1994 * pow(10,-9) #m
-ua = 73.9 *100  #m^-1, optical absorbtion coeff
+#ua = 73.9 *100  #m^-1, optical absorbtion coeff
+U0 = numpy.linspace(10*100, 120*100, 8)
 k = 0.6 #W m^-1 K^-1
 p = 1000 #kg/m^-3
 c = 4184 # J kg^-1 K^-1
@@ -21,11 +22,11 @@ pi = 3.14
 #P0 = numpy.linspace(.00692, .015, 8)
 P = .00692
 R = 25* pow(10,-6)#m
-#z = 117.55 * pow(10,-6)#m
-Z0 = numpy.linspace(1 * pow(10,-6), 200 * pow(10,-6), 10)
+z = 117.55 * pow(10,-6)#m
+#Z0 = numpy.linspace(1 * pow(10,-6), 200 * pow(10,-6), 10)
 r = 25.18 * pow(10,-6) #m
 
-for z in Z0:
+for ua in U0:
 	dt = []
 	tc = pow(R,2) *c* p /(4*k)
 
@@ -35,10 +36,10 @@ for z in Z0:
 		constantBeforeIntegral = (2* ua * P1) / (p*c*pi*pow(R,2))
 		dt.append(insideIntegral*constantBeforeIntegral)
 
-	plt.plot(t0, dt, label = (str(z*pow(10,6))[0:7] + 'um'))
+	plt.plot(t0, dt, label = (str(ua/100)[0:7] + 'cm^-1'))
 	plt.xlabel('Time from laser firing (s)')
 	plt.ylabel('Delta T (C)')
-	plt.title('Peak Temperature Change over Time; Z-Distance Alteration')
+	plt.title('Peak Temperature Change over Time; Optical Absorbtion Alteration')
 	plt.grid(True)
 
 	#s = 'Power On Surface = ' + str(P1)[0:6] + 'W'
@@ -50,5 +51,5 @@ for z in Z0:
 	#s = 'lambda = ' + str(wavelength*pow(10,9))[0:4] + 'nm'
 	#plt.text(.4,max(dt)*.1,s)
 
-plt.legend(title = 'Z-Distance (um)')
+plt.legend(title = 'Optical Absorbtion Coeff (cm^-1)')
 plt.show()
