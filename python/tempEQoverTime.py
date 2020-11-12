@@ -16,9 +16,9 @@ k = 0.6 #W m^-1 K^-1
 p = 1000 #kg/m^-3
 c = 4184 # J kg^-1 K^-1
 pi = 3.14
-P0 = .0029 #W // Array of power values
+P0 = .00692 #W // Array of power values
 R = 25* pow(10,-6)#m
-z = 117 * pow(10,-6)#m
+z = 117.55 * pow(10,-6)#m
 r = 25.18 * pow(10,-6) #m
 
 for u in ua:
@@ -31,8 +31,19 @@ for u in ua:
 		constantBeforeIntegral = (2* u * P) / (p*c*pi*pow(R,2))
 		dt.append(insideIntegral*constantBeforeIntegral)
 
-	plt.plot(t0, dt, 'o', color = 'black')
+	plt.scatter(t0, dt)
 	plt.xlabel('Time from laser firing (s)')
 	plt.ylabel('Delta T (C)')
+	plt.title('Peak Temperature Change over Time; Absorbtion Coeff Alteration')
 	plt.grid(True)
+
+	s = 'Power On Surface = ' + str(P0 * math.exp(-u*z))[0:6] + 'W'
+	plt.text(.4,max(dt)*.3,s)
+
+	s = 'Optical Absorbtion Coeff = ' + str(u)[0:4] + 'm^-1'
+	plt.text(.4,max(dt)*.2,s)
+
+	s = 'lambda = ' + str(wavelength*pow(10,9))[0:4] + 'nm'
+	plt.text(.4,max(dt)*.1,s)
+
 	plt.show()
