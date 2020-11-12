@@ -1,6 +1,7 @@
 import scipy.integrate as integrate
 import matplotlib.pyplot as plt
 import math
+import numpy
 
 def integrand(x,tempC, lilR, bigR):
 	#print(bigR, " ", lilR, " ", tempC, " ", x )
@@ -9,7 +10,7 @@ def integrand(x,tempC, lilR, bigR):
 	expBit = (-2*pow(lilR,2)) / (pow(bigR, 2) * c)
 	return (1/c)* math.exp(expBit)
 
-t0 = [0,.1,.2,.3,.4,.5,.6,.7,.8,.9,1] #s
+t0 = numpy.linspace(0, 1, 100) #s
 wavelength = 1994 * pow(10,-9) #m
 ua = 73.9 *100  #m^-1, optical absorbtion coeff
 k = 0.6 #W m^-1 K^-1
