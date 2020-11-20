@@ -14,7 +14,7 @@ def integrand(x,tempC, lilR, bigR):
 def MAPE(a, f):
 	error = 0
 	for i in range(1,len(a)):
-		diff = (abs(actualy[i] - dt[i])/(actualy[i]))
+		diff = (abs(a[i] - f[i])/(a[i]))
 		error = error + diff
 	return error/len(a)
 
