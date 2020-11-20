@@ -2,6 +2,7 @@ import scipy.integrate as integrate
 import matplotlib.pyplot as plt
 import math
 import numpy
+from sklearn.metrics import mean_absolute_error
 
 def integrand(x,tempC, lilR, bigR):
 	#print(bigR, " ", lilR, " ", tempC, " ", x )
@@ -9,6 +10,13 @@ def integrand(x,tempC, lilR, bigR):
 	
 	expBit = (-2*pow(lilR,2)) / (pow(bigR, 2) * c)
 	return (1/c)* math.exp(expBit)
+
+def MAPE(a, f):
+	error = 0
+	for i in range(1,len(a)):
+		diff = (abs(actualy[i] - dt[i])/(actualy[i]))
+		error = error + diff
+	return error/len(a)
 
 t0 = numpy.linspace(0, 1, 100) #s
 wavelength = 1994 * pow(10,-9) #m
@@ -26,31 +34,6 @@ z = 117.55 * pow(10,-6)#m
 #Z0 = numpy.linspace(1 * pow(10,-6), 200 * pow(10,-6), 10)
 r = 25.18 * pow(10,-6) #m
 
-for P in P0:
-	dt = []
-	tc = pow(R,2) *c* p /(4*k)
-
-	for t in t0:
-		P1 = P * math.exp(-ua*z)
-		insideIntegral,error = integrate.quad(integrand, 0, t, args = (tc,r, R,))
-		constantBeforeIntegral = (2* ua * P1) / (p*c*pi*pow(R,2))
-		dt.append(insideIntegral*constantBeforeIntegral)
-
-	plt.plot(t0, dt, label = (str(P1 )[0:7] + 'W'))
-	plt.xlabel('Time from laser firing (s)')
-	plt.ylabel('Delta T (C)')
-	plt.title('Peak Temperature Change over Time; Initial Power Alteration')
-	plt.grid(True)
-
-	#s = 'Power On Surface = ' + str(P1)[0:6] + 'W'
-	#plt.text(.4,max(dt)*.3,s)
-
-	#s = 'Optical Absorbtion Coeff = ' + str(u)[0:4] + 'm^-1'
-	#plt.text(.4,max(dt)*.2,s)
-
-	#s = 'lambda = ' + str(wavelength*pow(10,9))[0:4] + 'nm'
-	#plt.text(.4,max(dt)*.1,s)
-
 
 time = numpy.linspace(200,700, 100)
 actualy = []
@@ -65,5 +48,26 @@ for ay in actualy:
 	dy.append(ay-base)
 
 plt.plot(numpy.linspace(0,1, 100), dy, label = 'EXPERIMENTAL')
+
+
+
+for P in P0:
+	dt = []
+	tc = pow(R,2) *c* p /(4*k)
+
+	for t in t0:
+		P1 = P * math.exp(-ua*z)
+		insideIntegral,error = integrate.quad(integrand, 0, t, args = (tc,r, R,))
+		constantBeforeIntegral = (2* ua * P1) / (p*c*pi*pow(R,2))
+		dt.append(insideIntegral*constantBeforeIntegral)
+
+
+	plt.plot(t0, dt, label = (str(P1)[0:7] + 'W' + ', error = ' + str(MAPE(actualy,dt) * 100)[0:5]) + '%')
+
+
+plt.xlabel('Time from laser firing (s)')
+plt.ylabel('Delta T (C)')
+plt.title('Peak Temperature Change over Time; Initial Power Alteration')
+plt.grid(True)
 plt.legend(title = 'Surface Power')
 plt.show()
