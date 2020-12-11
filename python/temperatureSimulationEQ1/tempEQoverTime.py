@@ -19,19 +19,21 @@ def MAPE(a, f):
 
 t0 = numpy.linspace(0, .5, 100) #s
 wavelength = 1994 * pow(10,-9) #m
-ua = 73.9 *100  #m^-1, optical absorbtion coeff
-#U0 = numpy.linspace(10*100, 57*100, 4)
+ua = 107.8 *100  #m^-1, optical absorbtion coeff - OPTIMAL VAL = 107 CM^-1
+#U0 = numpy.linspace(10*100, 120*100, 10)
 k = 0.6 #W m^-1 K^-1
-p = 900 #kg/m^-3 - density of saline
+p = 1000 #kg/m^-3 - density of saline
 c = 4184 # J kg^-1 K^-1
 pi = 3.14
 #P0 = [0.005, .00692, .01 ,.0132, .015, .02] #W // Array of power values
-P0 = numpy.linspace(.0045, .0060, 10) #OPTIMAL INITIAL POWER = 483 mW
-#P = .00483
-R = 25* pow(10,-6)#m
-z = 117.55 * pow(10,-6)#m
-#Z0 = numpy.linspace(1 * pow(10,-6), 200 * pow(10,-6), 10)
-r = 25.18 * pow(10,-6) #m
+#P0 = numpy.linspace(.0045, .0060, 10) #OPTIMAL INITIAL POWER = 483 mW
+P = .00483
+#z = 117.55 * pow(10,-6)#m
+Z0 = numpy.linspace(100 * pow(10,-6), 175 * pow(10,-6), 10)
+r = 25 * pow(10,-6) #m - radius of fiber core, radius at beam waist
+
+divAngle = ((wavelength / 1000) / (pi * r / 1000)) / 1000 #Half angle divergence of the 
+
 
 
 time = numpy.linspace(200,700, 100)
@@ -51,10 +53,10 @@ plt.plot(numpy.linspace(0,.5, 100), dy, label = 'EXPERIMENTAL')
 
 
 
-for P in P0: #approximations over target variable
+for z in Z0: #approximations over target variable
 	dt = []
-	tc = pow(R,2) *c* p /(4*k)
-
+	R =  r + z*math.tan(divAngle) #m - radius at axial distance
+	tc = pow(R,2) *c* p /(4*k)	
 	for t in t0:
 		P1 = P * math.exp(-ua*z)
 		insideIntegral,error = integrate.quad(integrand, 0, t, args = (tc,r, R,))
@@ -62,12 +64,12 @@ for P in P0: #approximations over target variable
 		dt.append(insideIntegral*constantBeforeIntegral)
 
 
-	plt.plot(t0, dt, label = (str(P1)[0:7] + 'W' + ', error = ' + str(MAPE(dy,dt) * 100)[0:5]) + '%')
+	plt.plot(t0, dt, label = (str(z * pow(10,6))[0:7] + 'um' + ', error = ' + str(MAPE(dy,dt) * 100)[0:5]) + '%')
 
 #set up grid
 plt.xlabel('Time from laser firing (s)')
 plt.ylabel('Delta T (C)')
-plt.title('Peak Temperature Change over Time; Initial Power Alteration')
+plt.title('Peak Temperature Change over Time; Z Distance Alteration')
 plt.grid(True)
 plt.legend(title = 'Surface Power')
 plt.show()
