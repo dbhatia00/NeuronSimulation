@@ -13,19 +13,19 @@ def integrand(x,tempC, lilR, bigR):
 
 def MAPE(a, f):
 	error = 0
-	for i in range(1,len(a)):
+	for i in range(1,len(f)):
 		error = error + (abs(a[i] - f[i])/(a[i]))
 	return error/len(f)
 
 t0 = numpy.linspace(0, .5, 100) #s
 wavelength = 1994 * pow(10,-9) #m
-ua = 107.8 *100  #m^-1, optical absorbtion coeff - OPTIMAL VAL = 107 CM^-1
+ua = 121 *100  #m^-1, optical absorbtion coeff - OPTIMAL VAL = 107 CM^-1
 k = 0.6 #W m^-1 K^-1
 p = 1100 #kg/m^-3 - density of saline
 c = 4184 # J kg^-1 K^-1
 pi = 3.14
 P = .00483
-z = 116 * pow(10,-6)#m
+z = 85.8 * pow(10,-6)#m
 r = 25 * pow(10,-6) #m - radius of fiber core, radius at beam waist
 
 divAngle = ((wavelength / 1000) / (pi * r / 1000)) / 1000 #Half angle divergence of the 
@@ -59,12 +59,12 @@ for t in t0:
 	dt.append(insideIntegral*constantBeforeIntegral)
 
 
-plt.plot(t0, dt, label = ('SIMULATED - error = ' + str(MAPE(dy,dt) * 100)[0:5]) + '%')
+plt.plot(t0, dt, label = ('SIMULATED - error = ' + str(MAPE(dy,dt) * 100)[0:5]) + '% \nPower = ' + str(P) + 'W\nz-distance = ' + str(z * math.pow(10,6)) + 'um\nOptical Absorbtion = ' + str(ua/100) + " cm^-1")
 
 #set up grid
 plt.xlabel('Time from laser firing (s)')
 plt.ylabel('Delta T (C)')
 plt.title('Peak Temperature Change over Time; Minimize Error')
 plt.grid(True)
-plt.legend(title = 'Surface Power')
+plt.legend(title = '')
 plt.show()
