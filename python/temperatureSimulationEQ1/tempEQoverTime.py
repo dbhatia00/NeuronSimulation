@@ -20,10 +20,10 @@ def MAPE(a, f):
 			aIter = aIter+1
 	return error/len(f)
 
-t0 = numpy.linspace(0, .05, 100) #s
+t0 = numpy.linspace(0, .5, 100) #s
 wavelength = 1994 * pow(10,-9) #m
 #ua = 107.8 *100  #m^-1, optical absorbtion coeff - OPTIMAL VAL = 107 CM^-1
-U0 = numpy.linspace(50*100, 130*100, 10)
+U0 = numpy.linspace(50*100, 200*100, 10)
 k = 0.6 #W m^-1 K^-1
 p = 1000 #kg/m^-3 - density of saline
 c = 4184 # J kg^-1 K^-1
@@ -65,7 +65,6 @@ for ua in U0: #approximations over target variable
 		insideIntegral,error = integrate.quad(integrand, 0, t, args = (tc,r, R,))
 		constantBeforeIntegral = (2* ua * P1) / (p*c*pi*pow(R,2))
 		dt.append(insideIntegral*constantBeforeIntegral)
-
 
 	plt.plot(t0, dt, label = (str(ua/100)[0:7] + 'cm^-1' + ', error = ' + str(MAPE(dy,dt) * 100)[0:5]) + '%')
 

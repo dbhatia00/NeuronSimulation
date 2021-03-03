@@ -1,0 +1,6 @@
+[temp] = xlsread('data.xlsx');
+celc = temp(:,1);
+time = temp(:,2);
+figure(1);
+plot(time(19900:22500), celc(6962:174500))
+
