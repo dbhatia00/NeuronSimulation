@@ -16,20 +16,19 @@ def MAPE(a, f):
 	aIter = 0
 	for i in range(1,len(f)):
 		error = error + (abs(a[aIter] - f[i])/(a[i]))
-		if i%10 == 0:
-			aIter = aIter+1
+		aIter = aIter + 1
 	return error/len(f)
 
-t0 = numpy.linspace(0, .5, 100) #s
+t0 = numpy.linspace(0, .02, 100) #s
 wavelength = 1994 * pow(10,-9) #m
 #ua = 107.8 *100  #m^-1, optical absorbtion coeff - OPTIMAL VAL = 107 CM^-1
-U0 = numpy.linspace(50*100, 200*100, 10)
+U0 = numpy.linspace(100*100, 180*100, 10)
 k = 0.6 #W m^-1 K^-1
 p = 1000 #kg/m^-3 - density of saline
 c = 4184 # J kg^-1 K^-1
 pi = 3.14
 #P0 = [0.005, .00692, .01 ,.0132, .015, .02] #W // Array of power values
-#P0 = numpy.linspace(.0045, .0060, 10) #OPTIMAL INITIAL POWER = 483 mW
+#P0 = numpy.linspace(.00225, .0060, 9) #OPTIMAL INITIAL POWER = 483 mW
 P = .00483
 z = 88.8 * pow(10,-6)#m
 #Z0 = numpy.linspace(75 * pow(10,-6), 100 * pow(10,-6), 10)
@@ -39,7 +38,7 @@ divAngle = ((wavelength / 1000) / (pi * r / 1000)) / 1000 #Half angle divergence
 
 
 
-time = numpy.linspace(200,700, 100)
+time = numpy.linspace(200,220, 100)
 actualy = []
 
 
@@ -52,7 +51,7 @@ dy = []
 for ay in actualy: #calculate the delta of experimental data
 	dy.append(ay-base)
 
-plt.plot(numpy.linspace(0,.5, 100), dy, label = 'EXPERIMENTAL')
+plt.plot(numpy.linspace(0,.02, 100), dy, label = 'EXPERIMENTAL')
 
 
 
@@ -67,11 +66,12 @@ for ua in U0: #approximations over target variable
 		dt.append(insideIntegral*constantBeforeIntegral)
 
 	plt.plot(t0, dt, label = (str(ua/100)[0:7] + 'cm^-1' + ', error = ' + str(MAPE(dy,dt) * 100)[0:5]) + '%')
+	#plt.plot(t0, dt, label = (str(P)[0:7] + 'W' + ', error = ' + str(MAPE(dy,dt) * 100)[0:5]) + '%')
 
 #set up grid
 plt.xlabel('Time from laser firing (s)')
 plt.ylabel('Delta T (C)')
-plt.title('Peak Temperature Change over Time; Absorbtion Coeff Power Alteration')
+plt.title('Peak Temperature Change over Time; Optical Absorbtion Coeff')
 plt.grid(True)
-plt.legend(title = 'Absorbtion Coeff')
+plt.legend(title = 'Optical Absorbtion Coeff')
 plt.show()
