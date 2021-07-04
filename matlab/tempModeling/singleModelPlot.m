@@ -13,16 +13,16 @@ plot(time, celc)
 % x = (69.62:198.4) ;
 % y = f(x);
 % plot(x,y);
-% 
-% %STAGE 2 - time = [198.4,698.3]
-% time2 = time(19800:69900);
-% celc2 = celc(19800:69900);
-% g=fit(time2,celc2,'exp2')
-% 
-% hold on
-% x = (196:699) ;
-% y = g(x);
-% plot(x,y);
+
+%STAGE 2 - time = [198.4,698.3]
+time2 = time(19800:69900);
+celc2 = celc(19800:69900);
+g=fit(time2,celc2,'exp2')
+
+hold on
+x = (196:699) ;
+y = g(x);
+plot(x,y);
 % 
 % %STAGE 3 - time = [688.3,1745]
 % time2 = time(68830:174500);
